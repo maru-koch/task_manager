@@ -18,19 +18,6 @@ class Task(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     completed = models.BooleanField(default=False)
     status = models.CharField(max_length=200, default="todo", choices=TASK_STATUS)
-
-    @property
-    def total(self):
-        return self.objects.count()
-    
-    # @property
-    # def completed(self):
-    #     """Returns the total number of completed tasks."""
-    #     return self.objects.filter(completed=True).count()
-    
-    # @property
-    # def pending(self):
-    #     return self.objects.filter(completed=False).count()
     
     class Meta:
         ordering = ["-created_at"]

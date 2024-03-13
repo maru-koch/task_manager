@@ -28,9 +28,11 @@ class TaskDetailView(RetrieveUpdateDestroyAPIView, LoginRequiredMixin):
 class TasksAnalytics(APIView):
     """Retrieves the tasks analytics. """
     def get(self, request, format=None):
-        tasks = Task.objects.all(user=request.user)
+        tasks = Task.objects.filter(user=request.user) \
+        if not request.user.is_admin else Task.objects.all()
         return Response({
-            'total_tasks':tasks.total,
-            'completed_tasks':tasks.completed,
-            'pending_tasks':tasks.pending
+            'total_tasks':tasks.count(),
+            'completed_tasks':tasks.filter(status="completed").count(),
+            'pending_tasks':tasks.filter(status="todo").count(),
+            'in_progress_tasks':tasks.filter(status="in progress").count()
         })
