@@ -155,7 +155,9 @@ CELERY_TASK_TRACK_STARTED = True
  
 # MAIN CELERY CONFIG 
 CELERY_BROKER_URL = 'amqp://localhost'
-# CELERY_BROKER_URL='amqp://guest:guest@localhost:5672//'
+
+#CELERY_BROKER_URL='amqp://guest:guest@rabbitmq:5672//' # Docker
+
 CELERY_RESULT_BACKEND = "redis://localhost:6379"
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = "json"
