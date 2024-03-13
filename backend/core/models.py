@@ -3,6 +3,7 @@ from uuid import uuid4
 from core.account.models import CustomUser
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from core.tasks import send_notification
 
 TASK_STATUS = (
     ("todo", "ToDo"),
@@ -22,16 +23,8 @@ class Task(models.Model):
     class Meta:
         ordering = ["-created_at"]
 
-class Notification(models.Model):
-    id = models.UUIDField(default=uuid4, editable=False, primary_key=True)
-    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name="notifications")
-    message = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        ordering = ["-created_at"]
-
-@receiver(signal=post_save, sender=Notification)
+@receiver(signal=post_save, sender=Task)
 def notify_task_completed(sender, instance, created, **kwargs):
     """Prints a notification when a new task is created. """
-    print(f"Task-{instance.task.title} created by {instance.task.user.first_name}")
+    if instance.completed:
+        send_notification.delay(instance.title, instance.user.first_name)
