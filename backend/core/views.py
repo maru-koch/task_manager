@@ -14,6 +14,8 @@ class TasksView(ListCreateAPIView, LoginRequiredMixin):
     serializer_class = TaskSerializer
 
     def get_queryset(self):
+        """Returns only the login user's tasks 
+        if the person is not an admin."""
         if not self.request.user.is_admin:
             return Task.objects.filter(user=self.request.user)
 
@@ -24,11 +26,9 @@ class TaskDetailView(RetrieveUpdateDestroyAPIView, LoginRequiredMixin):
 class TasksAnalytics(APIView):
     """Retrieves the tasks analytics. """
     def get(self, request, format=None):
-        total_tasks = Task.objects.all().count()
-        completed_tasks = Task.objects.filter(completed=True).count()
-        pending_tasks = Task.objects.filter(completed=False).count()
+        tasks = Task.objects.all(user=request.user)
         return Response({
-            'total_tasks':total_tasks,
-            'completed_tasks':completed_tasks,
-            'pending_tasks':pending_tasks
+            'total_tasks':tasks.total,
+            'completed_tasks':tasks.completed,
+            'pending_tasks':tasks.pending
         })

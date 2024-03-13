@@ -39,9 +39,7 @@ class UserRegistrationView(APIView):
 class UserLoginView(APIView):
     """ Authenticates the user and returns, token"""
     def post(self, request, format=None):
-        email = serializer.validated_data['email']
-        password = serializer.validated_data['password']
-        user = authenticate(email=email, password=password)
+        user = authenticate(**request.data)
         if user is not None:
             token = get_tokens_for_user(user)
             serializer = CustomUserSerializer(user)

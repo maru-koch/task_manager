@@ -20,15 +20,17 @@ class Task(models.Model):
     status = models.CharField(max_length=200, default="todo", choices=TASK_STATUS)
 
     @property
-    def total_tasks(self):
+    def total(self):
         return self.objects.count()
     
-    def completed_tasks(self):
-        """Returns the total number of completed tasks."""
-        return self.objects.filter(completed=True).count()
+    # @property
+    # def completed(self):
+    #     """Returns the total number of completed tasks."""
+    #     return self.objects.filter(completed=True).count()
     
-    def pending_tasks(self):
-        return self.objects.filter(completed=False).count()
+    # @property
+    # def pending(self):
+    #     return self.objects.filter(completed=False).count()
     
     class Meta:
         ordering = ["-created_at"]
