@@ -1,9 +1,8 @@
 from django.db import models
 from uuid import uuid4
-from core.models import CustomUser
+from core.account.models import CustomUser
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.utils import timezone
 
 TASK_STATUS = (
     ("todo", "ToDo"),
@@ -13,7 +12,7 @@ TASK_STATUS = (
 
 class Task(models.Model):
     id = models.UUIDField(default=uuid4, editable=False, primary_key=True)
-    user = models.ForeignKey(CustomUser, related_name="tasks")
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="tasks")
     title = models.CharField(max_length=200)
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -36,7 +35,7 @@ class Task(models.Model):
 
 class Notification(models.Model):
     id = models.UUIDField(default=uuid4, editable=False, primary_key=True)
-    task = models.ForeignKey(Task, related_name="notifications")
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name="notifications")
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 

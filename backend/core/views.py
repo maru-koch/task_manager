@@ -3,10 +3,10 @@ from rest_framework.generics import (
     RetrieveUpdateDestroyAPIView)
 from django.contrib.auth.mixins import LoginRequiredMixin
 from rest_framework.views import APIView
-from serializer import TaskSerializer
+from core.serializer import TaskSerializer
 from rest_framework.response import Response
 from rest_framework import status
-from models import Task
+from core.models import Task
 
 
 class TasksView(ListCreateAPIView, LoginRequiredMixin):
@@ -21,7 +21,7 @@ class TaskDetailView(RetrieveUpdateDestroyAPIView, LoginRequiredMixin):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
 
-class TaskAnalytics(APIView):
+class TasksAnalytics(APIView):
     """Retrieves the tasks analytics. """
     def get(self, request, format=None):
         total_tasks = Task.objects.all().count()
