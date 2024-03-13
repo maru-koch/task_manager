@@ -4,13 +4,16 @@ from uuid import uuid4
 
 class CustomUserManager(BaseUserManager):
     
-    def create_user(self, email=None, **kwargs):
+    def create_user(self, email=None, password=None, **kwargs):
         """Creates and saves regular User with 
         the given email and password."""
         if not email:
             raise ValueError('Email is required')
+        if not password:
+            raise ValueError('Password is required')
         email = self.normalize_email(email)
         user = self.model(email=email, **kwargs)
+        user.set_password(password)
         user.save(using=self._db)
         return user
     

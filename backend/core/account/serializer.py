@@ -20,10 +20,15 @@ class CustomUserSerializer(serializers.ModelSerializer):
         return attrs
 
     def create(self, validated_data):
-        password = validated_data.pop('password')
         _ = validated_data.pop('password2')
+        groups = validated_data.pop('groups')
+        user_permissions = validated_data.pop('user_permissions')
         user = CustomUser(**validated_data)
-        user.set_password(password)
         user.save()
         return user
         
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField(write_only=True)
+    class Meta:
+        fields = ('email', 'password')

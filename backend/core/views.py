@@ -15,21 +15,24 @@ class TasksView(ListCreateAPIView, LoginRequiredMixin):
     serializer_class = TaskSerializer
     pagination_class = PageNumberPagination
 
-    def get_queryset(self):
-        """Returns only the login user's tasks 
-        if the person is not an admin."""
-        if not self.request.user.is_admin:
-            return Task.objects.filter(user=self.request.user)
+    # def get_queryset(self):
+    #     """Returns only the login user's tasks 
+    #     if the person is not an admin."""
+    #     if self.request.user.is_authenticated:
+    #         if self.request.user.is_admin:
+    #             return Task.objects.all()
+    #         return Task.objects.filter(user=self.request.user)
 
 class TaskDetailView(RetrieveUpdateDestroyAPIView, LoginRequiredMixin):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
 
-class TasksAnalytics(APIView):
+class TasksAnalytics(APIView, LoginRequiredMixin):
     """Retrieves the tasks analytics. """
-    def get(self, request, format=None):
-        tasks = Task.objects.filter(user=request.user) \
-        if not request.user.is_admin else Task.objects.all()
+    def get(self, request, format='json'):
+        user = request.user
+        # tasks = Task.objects.all() if user.is_admin else Task.objects.filter(user=request.user)
+        tasks = Task.objects.all()
         return Response({
             'total_tasks':tasks.count(),
             'completed_tasks':tasks.filter(status="completed").count(),

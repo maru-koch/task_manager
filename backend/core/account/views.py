@@ -4,14 +4,12 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-from django.utils.encoding import smart_str, force_bytes
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
-from core.account.serializer import CustomUserSerializer
-from django.contrib.auth import authenticate
-from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
+from core.account.serializer import CustomUserSerializer, LoginSerializer
+from django.contrib.auth import authenticate, login, logout
+from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import InvalidToken
 from django.db.utils import IntegrityError
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -39,10 +37,14 @@ class UserRegistrationView(APIView):
 class UserLoginView(APIView):
     """ Authenticates the user and returns, token"""
     def post(self, request, format=None):
-        user = authenticate(**request.data)
-        if user is not None:
-            token = get_tokens_for_user(user)
-            serializer = CustomUserSerializer(user)
-            return Response({'token':token,'user':serializer.data, 'msg':'Login Success', 'status':status.HTTP_200_OK})
-        return Response({'msg':'Email or Password is not Valid', 'status':status.HTTP_404_NOT_FOUND})
+        serializer = LoginSerializer(data=request.data)
+        if serializer.is_valid():
+            email = serializer.validated_data.get('email')
+            password = serializer.validated_data.get('password')
+            user = authenticate(email=email, password=password)
+            if user is not None:
+                token = get_tokens_for_user(user)
+                login(request, user)
+                return Response({'token':token,'user':serializer.data, 'msg':'Login Success', 'status':status.HTTP_200_OK})
+            return Response({'msg':'Email or Password is not Valid', 'status':status.HTTP_404_NOT_FOUND})
     
