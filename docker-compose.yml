@@ -12,21 +12,34 @@ services:
             - DATABASE_URL=postgres://postgres:postgres@db:5432/postgres
     db:
         image: postgres:13
+        restart: always
+        ports:
+            - "5432:5432"
         environment:
             - POSTGRES_DB=postgres
             - POSTGRES_USER=postgres
             - POSTGRES_PASSWORD=postgres
+        volumes:
+            - ./data:/var/lib/postgres/data
     cache:
       image: redis:alpine
       volumes:
         - ./cache:/data
-        
+
     frontend:
         image: frontend
         build: 
             context: ./frontend
             dockerfile: Dockerfile
         ports:
-            - "3000:3000"
+            - "8080:8080"
         environment:
-            - VUE_APP_BACKEND_URL=http://localhost:8000
+            - VUE_APP_BACKEND_URL=http://localhost:8080
+    nginx:
+      image: nginx:latest
+      depends_on:
+        - backend
+      ports:
+        - 8000:8000
+      volumes:
+        - ./nginx/conf.d:/nginx/conf.d
