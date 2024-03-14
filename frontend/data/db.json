@@ -1,0 +1,34 @@
+{
+  "projects": [
+    {
+      "title": "Create new homepage banner",
+      "details": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.",
+      "complete": true,
+      "id": 1
+    },
+    {
+      "title": "Prepare the demo",
+      "details": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.",
+      "complete": true,
+      "id": 2
+    },
+    {
+      "title": "Attend to the meeting with the Product Owner",
+      "details": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.",
+      "complete": false,
+      "id": 3
+    },
+    {
+      "title": "Fix the bug in the sidebar",
+      "details": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.",
+      "complete": false,
+      "id": 4
+    },
+    {
+      "title": "Create tickets for the new feature",
+      "details": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.",
+      "complete": false,
+      "id": 5
+    }
+  ]
+}
