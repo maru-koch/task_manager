@@ -2,7 +2,7 @@
   <form @submit.prevent="handleSubmit">
     <label>Title</label>
     <input type="text" v-model="title" required />
-    <label>Details</label>
+    <label>Description</label>
     <textarea v-model="details" required></textarea>
     <button>Update Project</button>
   </form>
@@ -13,9 +13,9 @@
     props: ["id"],
     data() {
       return {
-        uri: "http://localhost:3000/projects/" + this.id,
+        uri: "http://localhost:3000/tasks/" + this.id,
         title: "",
-        details: "",
+        description: "",
       };
     },
     mounted() {

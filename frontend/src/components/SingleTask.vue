@@ -1,9 +1,9 @@
 <template>
-  <div class="project" :class="{ complete: project.complete }">
+  <div class="project" :class="{ complete: task.complete }">
     <div class="actions">
-      <h3 @click="toggleDetails">{{ project.title }}</h3>
+      <h3 @click="toggleDetails">{{ task.title }}</h3>
       <div class="icons">
-        <router-link :to="{ name: 'EditProject', params: { id: project.id } }">
+        <router-link :to="{ name: 'EditTask', params: { id: task.id } }">
           <span class="material-icons"> edit </span>
         </router-link>
         <span @click="deleteProject" class="material-icons"> delete </span>
@@ -11,18 +11,18 @@
       </div>
     </div>
     <div class="details" v-if="showDetails">
-      <p>{{ project.details }}</p>
+      <p>{{ task.description }}</p>
     </div>
   </div>
 </template>
 
 <script>
   export default {
-    props: ["project"],
+    props: ["task"],
     data() {
       return {
         showDetails: false,
-        uri: "http://localhost:3000/projects/" + this.project.id,
+        uri: "http://localhost:3000/tasks/" + this.project.id,
       };
     },
     methods: {
@@ -31,7 +31,7 @@
       },
       deleteProject() {
         fetch(this.uri, { method: "DELETE" })
-          .then(() => this.$emit("delete", this.project.id))
+          .then(() => this.$emit("delete", this.task.id))
           .catch((error) => console.log(error.message));
       },
       toggleComplete() {

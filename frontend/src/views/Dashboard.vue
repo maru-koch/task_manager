@@ -4,7 +4,7 @@
     <FilterNav @filterChange="current = $event" :current="current" />
     <div v-if="tasks.length">
       <div v-for="task in filteredProjects" :key="task.id">
-        <SingleProject :project="task" @delete="handleDelete" @complete="handleComplete" />
+        <SingleTask :task="task" @delete="handleDelete" @complete="handleComplete" />
       </div>
     </div>
     <div v-else class="empty">
@@ -15,30 +15,26 @@
 </template>
 
 <script>
-  import SingleProject from "../components/SingleProject.vue";
+  import SingleTask from "../components/SingleTask.vue";
   import FilterNav from "../components/FilterNav.vue";
   import Analytics from "../components/Analytics.vue";
   import data from "../../data/db.json"
+  import ENDPOINTS from "../api/client";
 
   export default {
     name: "Dashboard",
-    components: { SingleProject, FilterNav, Analytics},
+    components: { SingleTask, FilterNav, Analytics},
     data() {
       return {
         user:{first_name:"Maruche"},
-        tasks: data,
+        tasks: [],
         current: "all",
-        base_url:"http://localhost:8000/tasks"
       };
     },
-    // mounted() {
-    //   fetch(this.base_url).then((res) =>
-    //     res
-    //       .json()
-    //       .then((data) => (this.tasks = data))
-    //       .catch((error) => console.log(error.message))
-    //   );
-    // },
+    mounted() {
+      const res = ENDPOINTS.getAllTasks()
+      console.log(res)
+    },
     methods: {
       handleDelete(id) {
         this.tasks = this.tasks.filter((task) => task.id !== id);

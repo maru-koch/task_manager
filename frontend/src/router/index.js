@@ -1,23 +1,41 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/Dashboard.vue";
-import AddProject from "../views/AddProject.vue";
-import EditProject from "../views/EditProject.vue";
+import Dashboard from "../views/Dashboard.vue";
+import Home from "../views/Home.vue";
+import AddTask from "../views/AddTask.vue";
+import EditTask from "../views/EditTask.vue";
+import Login from "../views/Login.vue";
+import Signup from "../views/Register.vue"
 
 const routes = [
   {
     path: "/",
-    name: "Dashboard",
+    name: "Home",
     component: Home,
   },
   {
+    path: "/dashboard",
+    name: "Dashboard",
+    component: Dashboard,
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: Signup,
+  },
+  {
     path: "/add",
-    name: "AddProject",
-    component: AddProject,
+    name: "AddTask",
+    component: AddTask,
   },
   {
     path: "/tasks/:id",
-    name: "EditProject",
-    component: EditProject,
+    name: "EditTask",
+    component: EditTask,
     props: true,
   },
 ];

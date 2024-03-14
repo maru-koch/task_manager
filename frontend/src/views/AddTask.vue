@@ -1,11 +1,13 @@
 <template>
-  <form @submit.prevent="handleSubmit">
-    <label>Title</label>
-    <input type="text" v-model="title" required />
-    <label>Details</label>
-    <textarea v-model="details" required></textarea>
-    <button>Add Project</button>
-  </form>
+  <div class="container">
+    <form @submit.prevent="handleSubmit">
+      <label>Title</label>
+      <input type="text" v-model="title" required />
+      <label>Description</label>
+      <textarea v-model="details" required></textarea>
+      <button>Add Task</button>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -13,23 +15,25 @@
     data() {
       return {
         title: "",
-        details: "",
+        description: "",
       };
     },
     methods: {
       handleSubmit() {
         const project = {
           title: this.title,
-          details: this.details,
+          description: this.description,
           complete: false,
         };
 
-        fetch("http://localhost:3000/projects", {
+        fetch("http://localhost:3000/tasks", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(project),
         })
           .then(() => {
+            // navigate to home page if task is 
+            // sucessfully added.
             this.$router.push("/");
           })
           .catch((error) => console.log(error.message));
@@ -39,10 +43,18 @@
 </script>
 
 <style>
+  .container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px auto;
+    widows: 100%;
+  }
   form {
     background: white;
     padding: 20px;
     border-radius: 10px;
+    max-width: 400px;
   }
 
   label {

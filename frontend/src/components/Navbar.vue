@@ -1,8 +1,9 @@
 <script>
     export default {
+        props:["isAuthenticated"],
         data() {
             return {
-                isAuthenticated: true
+                isAuthenticated: false
             }
         },
     };
@@ -11,11 +12,13 @@
 <template>
     <nav class="main-nav">
         <div class="logo">
-            <img src="../assets/logo2.png" alt="logo" />
+            <router-link :to="{ name: 'Home' }">
+                <img src="../assets/icon.png" alt="logo" />
+            </router-link>
         </div>
         <div v-if="isAuthenticated" class="inner-nav">
             <span class="img-holder">
-                <img src="../assets/logo.png" alt="logo" />
+                <img class="user-profile" src="../assets/logo.png" alt="logo" />
             </span>
             <span>
                 <h5>{{ 'Maruche' }}</h5>
@@ -25,8 +28,8 @@
             </span>
         </div>
         <div v-else class="outer-nav">
-            <router-link :to="{ name: 'Home' }">Login</router-link>
-            <router-link :to="{ name: 'Home' }">Sign Up</router-link>
+            <router-link :to="{ name: 'Login' }">Login</router-link>
+            <router-link :to="{ name: 'Register' }">Sign Up</router-link>
         </div>
     </nav>
 </template>
@@ -37,6 +40,7 @@
         display:flex;
         justify-content: space-between;
         align-items: center;
+        padding:8px 0;
     }
 
     .main-nav .inner-nav, .main-nav .outer-nav{
@@ -45,14 +49,15 @@
         gap:20px;
         align-items: center;
     }
+
     .logo, .img-holder {
-        width: 50px;
-        height: 50px;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
         object-fit: contain;
     }
 
-    .logo img, .img-holder img {
+    .main-nav img{
         width: 100%;
         height: 100%;
         overflow: hidden;
@@ -60,11 +65,14 @@
 
     .main-nav a {
         text-decoration: none;
-        color: #000;
-        font-size: 18px;
+        color: #2b2b2b;
+        font-size: 16px;
     }
-
-    .img-holder img {
+    .logo a{
+        border-bottom:0;
+    }
+    
+    .img-holder .user-profile {
         border-radius: 50%;
         border:1 px solid rgb(188, 176, 199)
     }

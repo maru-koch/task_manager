@@ -11,7 +11,7 @@
       </button>
     </div>  
     <div class="nav-add">
-        <router-link :to="{ name: 'AddProject' }">Add a New Project</router-link>
+        <router-link :to="{ name: 'AddTask' }"><span style="margin:0 4px"><i class="fas fa-plus"></i></span>New Task</router-link>
     </div>
   </nav>
 </template>
@@ -64,4 +64,11 @@
     padding-bottom: 4px;
   }
 
+  .nav-add a{
+    background-color: #00ce89;
+    color:white;
+    font-size: 14px;
+    border-radius: 8px;
+    padding:4px 8px;
+  }
 </style>

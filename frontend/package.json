@@ -8,9 +8,11 @@
     "json-server": "npx json-server --watch data/db.json"
   },
   "dependencies": {
+    "axios": "^1.6.7",
     "core-js": "^3.8.3",
     "vue": "^3.2.13",
-    "vue-router": "^4.0.3"
+    "vue-router": "^4.0.3",
+    "vue-toastify": "^2.0.0-alpha.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~5.0.0",
