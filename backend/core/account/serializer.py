@@ -21,8 +21,6 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         _ = validated_data.pop('password2')
-        groups = validated_data.pop('groups')
-        user_permissions = validated_data.pop('user_permissions')
         user = CustomUser(**validated_data)
         user.save()
         return user
