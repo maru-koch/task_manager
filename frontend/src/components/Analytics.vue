@@ -1,18 +1,18 @@
 <template>
     <div class="display">
-        <p @click="toggleDetails">Hi {{'Maruche'}}, Welcome!</p>
+        <p>Hi <span style="font-weight: bold;">{{user.first_name}}</span>, Welcome!</p>
         <div class="card-holder">
             <div class="card completed">
-                <span class="number">{{analytics.completed}}</span>
-                <span class="title"> Completed</span>
+                <h2 class="number">{{3}}</h2>
+                <p class="">Completed</p>
             </div>
             <div class="card inprogress">
-                <span class="number">{{analytics.inprogress}}</span>
-                <span class="title">In Progress</span>
+                <h2 class="number">{{23}}</h2>
+                <p class="">In Progress</p>
             </div>
             <div class="card pending">
-                <span class="number">{{analytics.pending}}</span>
-                <span class="title">Pending</span>
+                <h2 class="number">{{8}}</h2>
+                <p class="">Pending</p>
             </div>
         </div>
     </div>
@@ -37,36 +37,56 @@
   
   <style scoped>
     .display{
-      margin: 20px auto;
       background: white;
+      padding:20px;
+      border-radius: 8px;
+      box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.05);
+      margin:20px 0;
     }
-    .card.complete {
+
+    .card{
+      border-radius: 8px;
+      height: 50px;
+      width: 100px;
+      box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.05);
+      background-image: -moz-linear-gradient()(45deg, #ebedee 30%, #9d9a9e 90%);
+      background-color: transparent;
+      background-image: linear-gradient()(45deg, #ebedee 30%, #9d9a9e 90%);
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding:16px;
+    }
+  
+    .card p, .card h2{
+      padding:0;
+      margin: 0;
+      font-size:0.8rem;
+    }
+    .card.completed {
       border-bottom: 4px solid #00ce89;
+      background-color: #e6f0ec;
     }
 
     .card.inprogress {
       border-bottom: 4px solid #0052ce;
+        background-color: #e8ecf1;
     }
 
     .card.pending {
       border-bottom: 4px solid #ca032e;
+      background-color: #eee6e7;
     }
     .card-holder {
       display: flex;
-      justify-content: space-between;
+      justify-content: space-evenly;
       align-items: center;
     }
   
-    .card{
-      border-radius: 10px;
-      box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.05);
-      background-image: -moz-linear-gradient()(45deg, #ebedee 30%, #9d9a9e 90%);
-      background-color: #bbb;
-      cursor: pointer;
-    }
-  
     .card .number {
-      font-size: 24px;
+      font-size: 44px;
       font-weight: 700;
     }
 

@@ -1,12 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/Home.vue";
+import Home from "../views/Dashboard.vue";
 import AddProject from "../views/AddProject.vue";
 import EditProject from "../views/EditProject.vue";
 
 const routes = [
   {
     path: "/",
-    name: "Home",
+    name: "Dashboard",
     component: Home,
   },
   {
@@ -15,7 +15,7 @@ const routes = [
     component: AddProject,
   },
   {
-    path: "/projects/:id",
+    path: "/tasks/:id",
     name: "EditProject",
     component: EditProject,
     props: true,
