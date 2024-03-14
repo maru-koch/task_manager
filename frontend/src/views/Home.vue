@@ -20,7 +20,7 @@
     components: { SingleProject, FilterNav, Analytics },
     data() {
       return {
-        projects: [],
+        tasks: [],
         current: "all",
         base_url:"http://localhost:8000/tasks"
       };
@@ -29,17 +29,17 @@
       fetch(this.base_url).then((res) =>
         res
           .json()
-          .then((data) => (this.projects = data))
+          .then((data) => (this.tasks = data))
           .catch((error) => console.log(error.message))
       );
     },
     methods: {
       handleDelete(id) {
-        this.projects = this.projects.filter((project) => project.id !== id);
+        this.tasks = this.tasks.filter((task) => task.id !== id);
       },
       handleComplete(id) {
-        const p = this.projects.find((project) => {
-          return project.id === id;
+        const p = this.tasks.find((task) => {
+          return task.id === id;
         });
         p.complete = !p.complete;
       },
@@ -47,12 +47,12 @@
     computed: {
       filteredProjects() {
         if (this.current === "completed") {
-          return this.projects.filter((project) => project.complete);
+          return this.tasks.filter((task) => task.complete);
         }
         if (this.current === "ongoing") {
-          return this.projects.filter((project) => !project.complete);
+          return this.tasks.filter((task) => !task.complete);
         }
-        return this.projects;
+        return this.tasks;
       },
     },
   };
