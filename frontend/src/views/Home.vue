@@ -20,10 +20,11 @@
       return {
         projects: [],
         current: "all",
+        base_url:"http://localhost:8000/tasks"
       };
     },
     mounted() {
-      fetch("http://localhost:3000/projects").then((res) =>
+      fetch(this.base_url).then((res) =>
         res
           .json()
           .then((data) => (this.projects = data))

@@ -1,4 +1,4 @@
-# tasko-vue
+# smart flow - task manager
 
 ## Project setup
 
