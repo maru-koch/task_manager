@@ -1,15 +1,14 @@
+  <script>
+      import Navbar from "./components/Navbar.vue";
+      export default {
+        components: { Navbar },
+      };
+  </script>
+
 <template>
   <Navbar />
   <router-view />
 </template>
-
-<script>
-  import Navbar from "./components/Navbar.vue";
-
-  export default {
-    components: { Navbar },
-  };
-</script>
 
 <style>
   body {
@@ -20,7 +19,7 @@
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    max-width: 600px;
+    max-width: 60vw;
     margin: 0 auto;
     color: #555;
   }
@@ -29,4 +28,3 @@
     cursor: pointer;
   }
 </style>
-./components/Menu.vue
