@@ -25,11 +25,12 @@
       },
       methods: {
         async handleSubmit() {
-          const payload = {
+
+          try{
+            const payload = {
             email: this.email,
             password: this.password,
           };
-
           const res = await ENDPOINTS.login(payload);
           // handle response
         
@@ -52,7 +53,14 @@
           }else{
             console.log('Server error')
           }
-
+          }catch(err){
+              if (err.response.status === 401){
+                  ENDPOINTS.getAuthorization()
+                  ENDPOINTS.removeAuthorization()
+                  this.$router.push('/login')
+              }
+          }
+      
         },
       },
     };

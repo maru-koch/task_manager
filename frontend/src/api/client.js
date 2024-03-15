@@ -20,6 +20,7 @@ removeAuthorization:()=>{
 },
 
 register: async (formData)=>{
+    // registers a new user
     try{
         const res = await api_backend.post('account/register', formData)
         return res
@@ -29,6 +30,7 @@ register: async (formData)=>{
 },
 
 login: (formData)=>{
+    // logs in an authenticated user
     try{
         const res = api_backend.post('account/login', formData)
         return res
@@ -36,8 +38,13 @@ login: (formData)=>{
         console.log(err)
     }
 },
-
+createTask:(formData)=>{
+    // creates a new task
+    const res = api_backend.post(`tasks`, formData)
+    return res
+},
 getTask:(trader_id)=>{
+    // gets a task by id
     const res = api_backend.get(`tasks/${trader_id}`)
     return res.data
 }

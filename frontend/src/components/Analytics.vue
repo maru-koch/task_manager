@@ -1,7 +1,7 @@
 <template>
     <div class="display">
         <p>Hi <span style="font-weight: bold;">{{user.first_name}}</span>, Welcome!</p>
-        <div class="card-holder">
+        <div v-if="showAnalytics" class="card-holder">
             <div class="card completed">
                 <h2 class="number">{{analystics.completed}}</h2>
                 <p class="">Completed</p>
@@ -25,7 +25,7 @@
       props: ["user"],
       data() {
         return {
-            showDetails: false,
+            showAnalytics: false,
             analystics:{
                 total: 0,
                 completed: 0,
@@ -34,8 +34,11 @@
         };
         },
       async mounted(){
+        //fetches the analytics data from the backend
+
         const res = await ENDPOINTS.fetchAnalytics()
         const data = res?.data;
+        if (data.length) {this.showAnalytics = True}
         this.analystics.total = data.total_tasks;
         this.analystics.completed = data.completed_tasks;
         this.analystics.inprogress = data.in_progress_tasks;
