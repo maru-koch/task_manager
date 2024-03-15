@@ -3,9 +3,9 @@
     <div class="actions">
       <h3 @click="toggleDetails">{{ task.title }}</h3>
       <div class="icons">
-        <router-link :to="{ name: 'EditTask', params: { id: task.id } }">
+        <!-- <router-link :to="{ name: 'EditTask', params: { id: task.id } }">
           <span class="material-icons"> edit </span>
-        </router-link>
+        </router-link> -->
         <span @click="deleteProject" class="material-icons"> delete </span>
         <span @click="toggleComplete" class="material-icons tick"> done </span>
       </div>
@@ -22,7 +22,7 @@
     data() {
       return {
         showDetails: false,
-        uri: "http://localhost:3000/tasks/" + this.project.id,
+        uri: "http://localhost:3000/tasks/" + this.task.id,
       };
     },
     methods: {
@@ -38,9 +38,9 @@
         fetch(this.uri, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ complete: !this.project.complete }),
+          body: JSON.stringify({ complete: !this.task.complete }),
         })
-          .then(() => this.$emit("complete", this.project.id))
+          .then(() => this.$emit("complete", this.task.id))
           .catch((error) => console.log(error.message));
       },
     },

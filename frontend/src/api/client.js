@@ -42,13 +42,13 @@ getTask:(trader_id)=>{
     return res.data
 }
 ,
-getAllTasks: ()=>{
-    const res = api_backend.get('tasks')
+getAllTasks: (pageNumber)=>{
+    const res = api_backend.get(`tasks?page=${pageNumber}`)
     return res
 },
 
 fetchAnalytics: ()=>{
-    const res = api_backend.get('analytics')
+    const res = api_backend.get('tasks/analytics')
     return res
 },
 

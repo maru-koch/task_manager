@@ -3,15 +3,15 @@
         <p>Hi <span style="font-weight: bold;">{{user.first_name}}</span>, Welcome!</p>
         <div class="card-holder">
             <div class="card completed">
-                <h2 class="number">{{3}}</h2>
+                <h2 class="number">{{analystics.completed}}</h2>
                 <p class="">Completed</p>
             </div>
             <div class="card inprogress">
-                <h2 class="number">{{23}}</h2>
+                <h2 class="number">{{analystics.inprogress}}</h2>
                 <p class="">In Progress</p>
             </div>
             <div class="card pending">
-                <h2 class="number">{{8}}</h2>
+                <h2 class="number">{{analystics.pending}}</h2>
                 <p class="">Pending</p>
             </div>
         </div>
@@ -19,6 +19,8 @@
   </template>
   
   <script>
+    import ENDPOINTS from '../api/client';
+
     export default {
       props: ["user"],
       data() {
@@ -29,9 +31,17 @@
                 completed: 0,
                 inprogress: 0,
                 pending: 0},
-            base_url:"http://localhost:8000/tasks"
         };
-        }
+        },
+      async mounted(){
+        const res = await ENDPOINTS.fetchAnalytics()
+        const data = res?.data;
+        this.analystics.total = data.total_tasks;
+        this.analystics.completed = data.completed_tasks;
+        this.analystics.inprogress = data.in_progress_tasks;
+        this.analystics.pending = data.pending_tasks;
+        console.log(this.analystics)
+      }
       }
   </script>
   

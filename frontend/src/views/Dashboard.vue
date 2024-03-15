@@ -18,7 +18,6 @@
   import SingleTask from "../components/SingleTask.vue";
   import FilterNav from "../components/FilterNav.vue";
   import Analytics from "../components/Analytics.vue";
-  import data from "../../data/db.json"
   import ENDPOINTS from "../api/client";
 
   export default {
@@ -28,12 +27,15 @@
       return {
         user:{first_name:"Maruche"},
         tasks: [],
+        pageNumber:1,
         current: "all",
       };
     },
-    mounted() {
-      const res = ENDPOINTS.getAllTasks()
-      console.log(res)
+    async mounted() {
+      console.log('dashboard mounted')
+      const res = await ENDPOINTS.getAllTasks(this.pageNumber)
+      this.tasks = res?.data?.results;
+      console.log(this.tasks, 'ooo')
     },
     methods: {
       handleDelete(id) {
