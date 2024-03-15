@@ -22,10 +22,19 @@ services:
         volumes:
             - ./data:/var/lib/postgres/data
     cache:
-      image: redis:alpine
-      volumes:
-        - ./cache:/data
-
+        image: redis:alpine
+        volumes:
+            - ./cache:/data
+        ports:
+            - '6379:6379'
+    rabbitmq:
+        hostname: rabbit
+        image: rabbitmq:latest
+        environment:
+            - RABBITMQ_DEFAULT_USER=guess
+            - RABBITMQ_DEFAULT_PASS=guess
+        ports:
+            - "5672:5672"
     frontend:
         image: frontend
         build: 

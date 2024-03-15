@@ -4,8 +4,14 @@ from core.account.models import CustomUser
 from core.account.serializer import CustomUserSerializer
 
 class TaskSerializer(serializers.ModelSerializer):
-    user_detail = CustomUserSerializer(read_only=True)
+    user  = CustomUserSerializer(read_only=True)
     class Meta:
         model = Task
-        fields = ('id', 'user', 'user_detail', 'title', 'description', 'created_at', 'completed', 'status')
+        fields = ('id', 'user', 'title', 'description', 'created_at', 'completed', 'status')
         dept=1
+
+    def create(self, validated_data):
+        user = self.context['request'].user
+        task = Task(user=user, **validated_data)
+        task.save()
+        return task

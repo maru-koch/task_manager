@@ -27,24 +27,31 @@ def get_tokens_for_user(user):
 class UserRegistrationView(APIView):
     def post(self, request, format='json'):
         """Creates a new patient, doctor, or admin user. """
-        serializer = CustomUserSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({'msg':'Registration Success','data':serializer.data, 'status':status.HTTP_201_CREATED})
-        return Response({'msg':'Registration not successful', 'error':serializer.errors, 'status':status.HTTP_400_BAD_REQUEST})
-       
+        try:
+            serializer = CustomUserSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response({'msg':'Registration Success','data':serializer.data, 'status':status.HTTP_201_CREATED})
+            return Response({'msg':'Registration not successful', 'error':serializer.errors, 'status':status.HTTP_400_BAD_REQUEST})
+        except Exception:
+            return Response({'msg':'Email already registered', 'error':serializer.errors, 'status':status.HTTP_401_UNAUTHORIZED})
 
 class UserLoginView(APIView):
     """ Authenticates the user and returns, token"""
     def post(self, request, format=None):
-        serializer = LoginSerializer(data=request.data)
-        if serializer.is_valid():
-            email = serializer.validated_data.get('email')
-            password = serializer.validated_data.get('password')
-            user = authenticate(email=email, password=password)
-            if user is not None:
-                token = get_tokens_for_user(user)
-                login(request, user)
-                return Response({'token':token,'user':serializer.data, 'msg':'Login Success', 'status':status.HTTP_200_OK})
-            return Response({'msg':'Email or Password is not Valid', 'status':status.HTTP_404_NOT_FOUND})
-    
+        try:
+            serializer = LoginSerializer(data=request.data)
+            if serializer.is_valid():
+                email = serializer.validated_data.get('email')
+                password = serializer.validated_data.get('password')
+                user = authenticate(email=email, password=password)
+                print('user', user)
+                if user is not None:
+                    token = get_tokens_for_user(user)
+                    login(request, user)
+                    return Response({'token':token,'user':serializer.data, 'msg':'Login Success', 'status':status.HTTP_200_OK})
+                return Response({'msg':'Incorrect Email or Password', 'status':status.HTTP_404_NOT_FOUND})
+            else:
+                return Response({'msg':'Invalid Email or Password', 'status':status.HTTP_404_NOT_FOUND})
+        except ObjectDoesNotExist:
+            return Response({'msg':'Invalid Email or Password', 'status':status.HTTP_404_NOT_FOUND})
