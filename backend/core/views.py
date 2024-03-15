@@ -15,13 +15,13 @@ class TasksView(ListCreateAPIView, LoginRequiredMixin):
     serializer_class = TaskSerializer
     pagination_class = PageNumberPagination
 
-    # def get_queryset(self):
-    #     """Returns only the login user's tasks 
-    #     if the person is not an admin."""
-    #     if self.request.user.is_authenticated:
-    #         if self.request.user.is_admin:
-    #             return Task.objects.all()
-    #         return Task.objects.filter(user=self.request.user)
+    def get_queryset(self):
+        """Returns only the login user's tasks 
+        if the person is not an admin."""
+        if self.request.user.is_authenticated:
+            if self.request.user.is_admin:
+                return Task.objects.all()
+            return Task.objects.filter(user=self.request.user)
 
 class TaskDetailView(RetrieveUpdateDestroyAPIView, LoginRequiredMixin):
     queryset = Task.objects.all()
